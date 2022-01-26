@@ -1,0 +1,49 @@
+body {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px
+}
+#bg, #fg { display: none }
+
+.bg-colors, .fg-colors {
+    display: flex;
+    justify-content: center;
+    gap: 8px
+}
+.color > div {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.color {
+    border: 3px transparent solid;
+    padding: 3px;
+    border-radius: 50%;
+}
+.color.chosen {
+    border-color: #FFCB57;
+}
+.prev {
+    padding: 5px;
+    border: 3px transparent solid;
+    border-radius: 8px;
+}
+.prev > img { width: 48px; cursor: pointer; }
+.prev.chosen {
+    border-color: #FFCB57;
+}
+
+.fg-choose-wrp, .bg-choose-wrp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px
+}
+.fg-samples, .bg-samples {
+    display: flex;
+    width: calc(48px * 10 + 16px);
+    overflow-x: scroll;
+    gap: 8px
+}
