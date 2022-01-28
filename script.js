@@ -27,8 +27,8 @@
 
     // set new chosen element by click
     $('.color, .prev').bind('click', e => {
-		if ($('#save').attr('disabled'))
-			$('#save').removeAttr('disabled')
+        if ($('#save').attr('disabled'))
+            $('#save').removeAttr('disabled')
         const _t = $(e.target)
         if (!_t.attr('class')) {
             _t.parent().siblings().removeClass('chosen')
@@ -76,12 +76,12 @@
     $('.fg-colors .color').eq(0).addClass('chosen')
     $('.bg-samples .prev').eq(0).addClass('chosen')
     $('.fg-samples .prev').eq(0).addClass('chosen')
-	
-	$('#save').bind('click', () => {
-		const data = $('#result')[0].toDataURL()
-		const download = $('<a>')
+    
+    $('#save').bind('click', () => {
+        const data = $('#result')[0].toDataURL()
+        const download = $('<a>')
             .attr('href', data)
-			.attr('download', 'avatar.png')
-		download[0].click()
-	})
+            .attr('download', 'avatar.png')
+        download[0].click()
+    })
 })();
