@@ -80,9 +80,8 @@
 	$('#save').bind('click', () => {
 		const data = $('#result')[0].toDataURL()
 		const download = $('<a>')
-			.attr('src', data)
+            .attr('href', data)
 			.attr('download', 'avatar.png')
 		download[0].click()
-		console.log(data)
 	})
 })();
