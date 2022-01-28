@@ -4,7 +4,9 @@ This is a simple tool that can help create an avatar for [Ingress](https://ingre
 ## Features
 * Output image dimensions are 128x128 pixels
 * 9 background patterns, 35 foreground figures, and 8 colors to each of them
-* Simple to save: just right click on canvas and choose "Save image as..."
+* Simple to save:
+  * right click on canvas and choose "Save image as..."
+  * or use "Save" button beneath the canvas
 
 ## To-do List
 * [ ] Save the current state of the tool to the browser's local storage
