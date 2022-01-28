@@ -11,9 +11,12 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <canvas id="bg"></canvas><canvas id="fg"></canvas>
-    <canvas id="result" width="128" height="128"></canvas>
-    
+	<div class="canvases">
+		<canvas id="bg"></canvas>
+		<canvas id="fg"></canvas>
+		<canvas id="result" width="128" height="128"></canvas>
+		<button id="save" disabled>Save image</button>
+	</div>
     <div class="bg-choose-wrp">
         <div class="bg-samples"></div>
         <div class="bg-colors"></div>

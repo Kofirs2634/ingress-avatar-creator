@@ -3,47 +3,61 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 64px
+    gap: 3em;
+	user-select: none;
 }
+
+.canvases {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: .75em
+}
+
+/* Hide service canvases */
 #bg, #fg { display: none }
 
+/* Make example colors visible */
 .bg-colors, .fg-colors {
-    display: flex;
-    justify-content: center;
-    gap: 8px
-}
-.color > div {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: .25em;
 }
 .color {
-    border: 3px transparent solid;
-    padding: 3px;
-    border-radius: 50%;
+	cursor: pointer;
+	padding: 3px;
+	border: 3px solid transparent;
+	border-radius: 50%
 }
-.color.chosen {
-    border-color: #FFCB57;
-}
-.prev {
-    padding: 5px;
-    border: 3px transparent solid;
-    border-radius: 8px;
-}
-.prev > img { width: 48px; cursor: pointer; }
-.prev.chosen {
-    border-color: #FFCB57;
+.color.chosen { border-color: #FFCB57 }
+.color > div {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
 }
 
-.fg-choose-wrp, .bg-choose-wrp {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px
+/* Make beautiful pattern thumbnails */
+.bg-samples, .fg-samples {
+	max-width: 80%;
+	display: flex;
+	gap: .25em;
+	overflow-x: auto
 }
-.fg-samples, .bg-samples {
-    display: flex;
-    width: calc(48px * 10 + 16px);
-    overflow-x: scroll;
-    gap: 8px
+.prev {
+	cursor: pointer;
+	padding: 5px 5px 1px 5px;
+	border: 3px solid transparent;
+	border-radius: 8px;
+}
+.prev.chosen { border-color: #FFCB57 }
+.prev > img { width: 48px }
+
+/* Align all to center and make responsible */
+.bg-choose-wrp, .fg-choose-wrp {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: .75em
 }
