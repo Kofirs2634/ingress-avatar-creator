@@ -1,49 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 body {
     background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 64px
+    gap: 3em;
+	user-select: none;
+	font-family: 'Exo 2', sans-serif
+}
+
+/* Some stuff with canvases */
+.canvases {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: .75em
 }
 #bg, #fg { display: none }
 
-.bg-colors, .fg-colors {
-    display: flex;
-    justify-content: center;
-    gap: 8px
+/* Button design */
+button {
+	background: #243A69;
+	position: relative;
+	color: #F9FEFF;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	padding: .25em .5em;
+	font-family: 'Exo 2', sans-serif
 }
-.color > div {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
+button:not(:disabled):is(:hover, :active) {
+	background: #37538F;
+	color: #FFF
 }
-.color {
-    border: 3px transparent solid;
-    padding: 3px;
-    border-radius: 50%;
+button:not(:disabled):is(:hover, :active):before {
+	filter: brightness(1.15)
 }
-.color.chosen {
-    border-color: #FFCB57;
+button:before {
+	content: '';
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	background: linear-gradient(to bottom right, #1A68B6, #5554AD);
+	border-radius: 4px;
+	z-index: -1
 }
-.prev {
-    padding: 5px;
-    border: 3px transparent solid;
-    border-radius: 8px;
+button:disabled {
+	background: #1A213A;
+	color: #E6E6E6;
+	cursor: not-allowed
 }
-.prev > img { width: 48px; cursor: pointer; }
-.prev.chosen {
-    border-color: #FFCB57;
+button:disabled:before {
+	background: linear-gradient(to bottom right, #224373, #494788);
 }
 
-.fg-choose-wrp, .bg-choose-wrp {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px
+/* Make example colors visible */
+.bg-colors, .fg-colors {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: .25em;
 }
-.fg-samples, .bg-samples {
-    display: flex;
-    width: calc(48px * 10 + 16px);
-    overflow-x: scroll;
-    gap: 8px
+.color {
+	cursor: pointer;
+	padding: 3px;
+	border: 3px solid transparent;
+	border-radius: 50%
+}
+.color.chosen { border-color: #FFCB57 }
+.color > div {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+}
+
+/* Make beautiful pattern thumbnails */
+.bg-samples, .fg-samples {
+	max-width: 80%;
+	display: flex;
+	gap: .25em;
+	overflow-x: auto
+}
+.prev {
+	cursor: pointer;
+	padding: 5px 5px 1px 5px;
+	border: 3px solid transparent;
+	border-radius: 8px;
+}
+.prev.chosen { border-color: #FFCB57 }
+.prev > img { width: 48px }
+
+/* Align all to center and make responsible */
+.bg-choose-wrp, .fg-choose-wrp {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: .75em
 }
