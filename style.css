@@ -6,7 +6,8 @@ body {
     align-items: center;
     gap: 3em;
     user-select: none;
-    font-family: 'Exo 2', sans-serif
+    font-family: 'Exo 2', sans-serif;
+    color: #E6E6E6
 }
 
 /* Some stuff with canvases */
@@ -100,4 +101,14 @@ button:disabled:before {
     flex-direction: column;
     align-items: center;
     gap: .75em
+}
+
+.redacted-wrp h3 {
+    margin: 0 0 .2em 0;
+    text-align: center;
+}
+.redacted-wrp {
+    display: flex;
+    flex-direction: column;
+    gap: .2em
 }
