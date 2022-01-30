@@ -1,6 +1,8 @@
 # Ingress Avatar Creator
 This is a simple tool that can help create an avatar for [Ingress](https://ingress.com). Made for agents who would like to use their in-game avatar in social media or somewhere else.
 
+**Last Updated:** 30 January 2022 (v.1.2)
+
 ## Features
 * Output image dimensions are 128x128 pixels
 * 9 background patterns, 35 foreground figures, and 8 colors to each of them
