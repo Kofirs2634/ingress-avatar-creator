@@ -1,5 +1,14 @@
 // protect context with self-invokable function
 ;(function() {
+    // getting saved state
+    const DEFAULT_STATE = {
+        bg: [0, 0],
+        fg: [0, 0],
+        custom: [null, null],
+        redacted: [false, 1, 'enl']
+    }
+    const STATE = JSON.parse(localStorage.getItem('iac-state')) ?? DEFAULT_STATE
+
     // some constants
     const PATH = './assets'
     const BG_COLORS = ['#271B5D', '#5F1601', '#444444', '#0A5B2A', '#585B21', '#640058', '#7E0000', '#005B5B']
@@ -7,12 +16,12 @@
     var CHOSEN_BORDER
 
     // append colors to user interface
-    BG_COLORS.forEach(e => {
-        $('.bg-colors').append($('<div>', { class: 'color' })
+    BG_COLORS.forEach((e, n) => {
+        $('.bg-colors').append($('<div>', { class: 'color', 'data-index': n })
             .append($('<div>').css('background-color', e)))
     })
-    FG_COLORS.forEach(e => {
-        $('.fg-colors').append($('<div>', { class: 'color' })
+    FG_COLORS.forEach((e, n) => {
+        $('.fg-colors').append($('<div>', { class: 'color', 'data-index': n })
             .append($('<div>').css('background-color', e)))
     })
 
@@ -27,9 +36,7 @@
     }
 
     // set new chosen element by click
-    $('.color, .prev').bind('click', e => {
-        if ($('#save').attr('disabled'))
-            $('#save').removeAttr('disabled')
+    $('.color, .prev').on('click', e => {
         const _t = $(e.target)
         if (!_t.attr('class')) {
             _t.parent().siblings().removeClass('chosen')
@@ -39,6 +46,7 @@
             _t.addClass('chosen')
         }
         redrawCanvas(CHOSEN_BORDER)
+        updateState()
     })
 
     /**
@@ -82,15 +90,55 @@
         ctxR.drawImage($('#fg')[0], 0, 0)
     }
 
+    /**
+     * Gets an index (`data-index` attribute) of specified element
+     * @param {string} selector a selector of target element
+     * @returns an index
+     */
+    function getIndex(selector) {
+        return +$(selector).attr('data-index')
+    }
+
+    /**
+     * Updates the state of creator
+     */
+    function updateState() {
+        STATE.bg = [getIndex('.bg-samples .chosen'), getIndex('.bg-colors .chosen')]
+        STATE.fg = [getIndex('.fg-samples .chosen'), getIndex('.fg-colors .chosen')]
+        STATE.redacted = [$('#redacted-mode').prop('checked'), +$('#level').val(), $('input[name="faction"]:checked').val()]
+        localStorage.setItem('iac-state', JSON.stringify(STATE))
+    }
+    /**
+     * Checks and repairs the state of creator if it was changed with dev tools.
+     * Here's a lot of bad code
+     */
+    function checkState() {
+        if (STATE.bg[0] < 0 || STATE.bg[0] > 8) STATE.bg[0] = 0
+        if (STATE.bg[1] < 0 || STATE.bg[1] > BG_COLORS.length) STATE.bg[1] = 0
+        if (STATE.fg[0] < 0 || STATE.fg[0] > 34) STATE.fg[0] = 0
+        if (STATE.fg[1] < 0 || STATE.fg[1] > FG_COLORS.length) STATE.fg[1] = 0
+        if (STATE.redacted[1] < 1 || STATE.redacted[1] > 16) STATE.redacted[1] = 1
+        if (!['res', 'enl'].includes(STATE.redacted[2].toLowerCase())) STATE.redacted[2] = 'enl'
+        localStorage.setItem('iac-state', JSON.stringify(STATE))
+    }
+
     // choose default parameters
-    $('.bg-colors .color').eq(0).addClass('chosen')
-    $('.fg-colors .color').eq(0).addClass('chosen')
-    $('.bg-samples .prev').eq(0).addClass('chosen')
-    $('.fg-samples .prev').eq(0).addClass('chosen')
-    setTimeout(() => redrawCanvas(), 2000)
+    checkState()
+    $('.bg-samples .prev').eq(STATE.bg[0]).addClass('chosen')
+    $('.fg-samples .prev').eq(STATE.fg[0]).addClass('chosen')
+    $('.bg-colors .color').eq(STATE.bg[1]).addClass('chosen')
+    $('.fg-colors .color').eq(STATE.fg[1]).addClass('chosen')
+    $('#redacted-mode').prop('checked', STATE.redacted[0])
+    $('#level, #faction-enl, #faction-res').prop('disabled', !STATE.redacted[0])
+    $('#level').val(STATE.redacted[1])
+    $(`#faction-${STATE.redacted[2].toLowerCase()}`).prop('checked', true)
+    setTimeout(() => {
+        $('#save').prop('disabled', false)
+        STATE.redacted[0] ? getRedactedBorder() : redrawCanvas()
+    }, 2000)
 
     // save image by click on button
-    $('#save').bind('click', () => {
+    $('#save').on('click', () => {
         const data = $('#result')[0].toDataURL()
         const download = $('<a>')
             .attr('href', data)
@@ -99,25 +147,29 @@
     })
 
     // toggle [REDACTED] avatar mode
-    $('#redacted-mode').bind('change', e => {
+    $('#redacted-mode').on('change', e => {
         const active = e.target.checked
         if (active) {
-            $('#level, #faction-enl, #faction-res').removeAttr('disabled')
+            $('#level, #faction-enl, #faction-res').prop('disabled', false)
             getRedactedBorder()
         } else {
-            $('#level, #faction-enl, #faction-res').attr('disabled', '')
+            $('#level, #faction-enl, #faction-res').prop('disabled', true)
             CHOSEN_BORDER = undefined
             redrawCanvas()
         }
+        updateState()
     })
-    $('#level, #faction-enl, #faction-res').bind('change', getRedactedBorder)
+    $('#level, #faction-enl, #faction-res').on('change', () => {
+        getRedactedBorder()
+        updateState()
+    })
 
     /**
      * Gets [REDACTED] avatar border according to some settings
      */
     function getRedactedBorder() {
         const level = $('#level').val()
-        const faction = $('input[name="faction"]:checked').attr('data-faction')
+        const faction = $('input[name="faction"]:checked').val()
         const img = new Image()
         img.src = `${PATH}/redacted/${faction}/${(level < 1 || level > 16) ? 1 : level}.png`
         img.addEventListener('load', e => {

@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Kofirs2634">
+    <meta name="description" content="A tool for creating Ingress agent avatars. Made for those who would like to use their avatars beyond the game">
     <title>Ingress Avatar Creator</title>
-    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-REQSKCS6FQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-REQSKCS6FQ');
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
@@ -32,15 +44,15 @@
             <label for="redacted-mode">Use [REDACTED] style</label>
         </div>
         <div class="redacted-item">
-            <label for="redacted-level">Level</label>
+            <label for="level">Level</label>
             <input type="number" id="level" min="1" max="16" value="1" disabled>
         </div>
         <div class="redacted-item">
-            <input type="radio" name="faction" data-faction="enl" id="faction-enl" checked disabled>
+            <input type="radio" name="faction" value="enl" id="faction-enl" checked disabled>
             <label for="faction-enl">Enlightened</label>
         </div>
         <div class="redacted-item">
-            <input type="radio" name="faction" data-faction="res" id="faction-res" disabled>
+            <input type="radio" name="faction" value="res" id="faction-res" disabled>
             <label for="faction-res">Resistance</label>
         </div>
     </div>
