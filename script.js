@@ -13,7 +13,7 @@
     const PATH = './assets'
     const BG_COLORS = ['#271B5D', '#5F1601', '#444444', '#0A5B2A', '#585B21', '#640058', '#7E0000', '#005B5B']
     const FG_COLORS = ['#8EB9E4', '#81D9F0', '#5E5E5E', '#9CDC9C', '#FFC895', '#F3A5CD', '#FF9095', '#F5F68E']
-    var CHOSEN_BORDER
+    let CHOSEN_BORDER
 
     // append colors to user interface
     BG_COLORS.forEach((e, n) => {
@@ -173,7 +173,7 @@
         const img = new Image()
         img.src = `${PATH}/redacted/${faction}/${(level < 1 || level > 16) ? 1 : level}.png`
         img.addEventListener('load', e => {
-            CHOSEN_BORDER = e.path[0]
+            CHOSEN_BORDER = img
             redrawCanvas(CHOSEN_BORDER)
         })
     }
